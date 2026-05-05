@@ -2,194 +2,209 @@
 
 # Automatisert testing med Python og GitHub Actions
 
-Dette er en enkel guide for VG1 elever for å lære:
-- Hva automatisert testing er
-- Hvordan teste lokalt med pytest
-- Hvordan bruke GitHub Actions
+Denne guiden viser:
+- Hvordan teste kode lokalt med pytest
+- Hvordan automatisere testing med GitHub Actions
 
 ---
 
-# Hva du trenger (før du starter)
-
-Installer dette:
+# Hva trenger du?
 
 ## 1. Python 3
-Last ned: https://www.python.org
+https://www.python.org/downloads/
 
 Sjekk:
+```bash
 python3 --version
+```
+Bruk gjerne "3.11"
 
 ---
 
 ## 2. VS Code (anbefalt)
-https://code.visualstudio.com
+https://code.visualstudio.com/
 
 ---
 
-## 3. Git
-https://git-scm.com
-
-Sjekk:
-git --version
+## 3. GitHub konto
+https://github.com/
 
 ---
 
-## 4. Terminal (Mac/Linux)
-Mac: innebygd terminal eller VS Code terminal
-
----
-
-## 5. (Valgfritt)
-- Oh My Zsh (bare for bedre terminal)
-- Ikke nødvendig
-
----
-
-# DEL 1 – Testing lokalt (uten GitHub Actions)
+## DEL 1 – Testing lokalt
 
 ## 1. Lag prosjekt
 
-mkdir testing-demo cd testing-demo
+```bash
+mkdir testing-demo
+cd testing-demo
+```
 
 ---
 
-## 2. Lag fil: calculator.py
+## 2. Lag fil: `calculator.py`
 
-python def add(a, b):     return a + b 
+```python
+def add(a, b):
+    return a + b
+```
 
 ---
 
-## 3. Lag testfil: test_calculator.py
+## 3. Lag testfil: `test_calculator.py`
 
-python from calculator import add  def test_add():     assert add(1, 2) == 3 
+```python
+from calculator import add
+
+def test_add():
+    assert add(1, 2) == 3
+```
 
 ---
 
 ## 4. Installer pytest
 
+```bash
 python3 -m pip install pytest
+```
 
 ---
 
 ## 5. Kjør tester
 
+```bash
 python3 -m pytest
+```
 
 ---
 
-## Resultat:
+## Resultat
 
-✔️ Hvis riktig:
+Hvis riktig:
+
+```bash
 1 passed
+```
 
-❌ Hvis feil:
+Hvis feil:
+
+```bash
 FAILED
+```
 
 ---
 
-## Test dette:
+## Test selv
 
-Endre koden:
+Endre i `calculator.py`:
 
-python return a - b 
+```python
+return a - b
+```
 
-Kjør igjen → testen feiler
-
----
-
-# Hva lærte du?
-
-- Tester sjekker koden automatisk
-- Du slipper å teste manuelt
+Kjør tester igjen → FAIL
 
 ---
 
-# 🚀DEL 2 – GitHub Actions (automatisk testing)
+# DEL 2 – GitHub Actions
 
-## 1. Lag repo på GitHub
+## 1. Lag repository på GitHub
 
 Gå til:
 https://github.com → New repository
 
 ---
 
-## 2. Koble prosjektet
+## 2. Last opp filer
 
-git init git add . git commit -m "første versjon" git branch -M main git remote add origin DIN_URL git push -u origin main
+Du kan:
+- Dra filene inn på GitHub  
+ELLER  
+- Bruke GitHub Desktop  
 
 ---
 
-## 3. Lag workflow
+## 3. Lag workflow-fil
 
 Lag fil:
 
+```bash
 .github/workflows/python-tests.yml
+```
 
 ---
 
-## 4. Lim inn:
+## 4. Lim inn dette:
 
-yaml name: Python Tests  on:   push:  jobs:   test:     runs-on: ubuntu-latest      steps:       - uses: actions/checkout@v4        - uses: actions/setup-python@v5         with:           python-version: "3.11"        - run: pip install pytest        - run: pytest 
+```yaml
+name: Python Tests
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install pytest
+
+      - run: pytest
+```
 
 ---
 
-## 5. Push kode
+## 5. Push / last opp
 
-git add . git commit -m "la til workflow" git push
+Når du laster opp kode:
+
+GitHub kjører testene automatisk
 
 ---
 
-# Hva skjer nå?
+# Hva skjer?
 
 GitHub:
-1. Starter server
+1. Starter en server
 2. Installerer Python
-3. Kjører tester
+3. Installerer pytest
+4. Kjører testene
 
 ---
 
 # Resultat
 
-🟢 Grønn = OK  
-🔴 Rød = Feil  
+- 🟢 Grønn = alt fungerer
+- 🔴 Rød = feil i koden
 
 ---
 
-# Demo (anbefalt)
+# Demo
 
-1. Gjør feil i kode  
-2. Push  
-3. Se GitHub feile inn på Actions 
-4. Fiks → push → grønn  
+1. Gjør en feil i koden
+2. Last opp / push
+3. Gå til "Actions"
+4. Se testen feile
+5. Fiks → last opp → grønn
 
 ---
 
 # Oppsummering
 
-- Automatisert testing sparer tid
+- Tester kjører automatisk
 - Finner feil tidlig
 - Brukes i ekte utvikling
 
 ---
 
-# Ekstra
+# !!
 
 Dette er en del av:
+
 CI/CD (Continuous Integration)
-
----
-
-# Tips
-
-- Hold koden enkel
-- Test små funksjoner
-- Push ofte
-
----
-
-# Ferdig!
-
-Du har nå laget:
-✔️ Tester  
-✔️ Automatisering  
-✔️ GitHub workflo
