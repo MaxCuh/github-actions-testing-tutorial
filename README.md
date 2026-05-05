@@ -1,48 +1,64 @@
-# github-actions-testing-tutorial
-
-# Automatisert testing med Python og GitHub Actions
+# 🧪Automatisert testing med Python og GitHub Actions (tutorial)
 
 Denne guiden viser:
 - Hvordan teste kode lokalt med pytest
+- Hvordan bruke virtual environment (venv)
 - Hvordan automatisere testing med GitHub Actions
 
 ---
 
 # Hva trenger du?
 
-## 1. Python 3
+## Python 3
 https://www.python.org/downloads/
 
 Sjekk:
 ```bash
 python3 --version
 ```
-Bruk gjerne "3.11"
+Hhelst bruk "3.11"
 
 ---
 
-## 2. VS Code (anbefalt)
+## Code editor -VS Code (anbefalt)
 https://code.visualstudio.com/
 
 ---
 
-## 3. GitHub konto
+## GitHub
 https://github.com/
 
 ---
 
-## DEL 1 – Testing lokalt
+# DEL 1 – Lokalt (Uten Github actions)
 
 ## 1. Lag prosjekt
 
 ```bash
-mkdir testing-demo
-cd testing-demo
+mkdir demo
+cd demo
 ```
 
 ---
 
-## 2. Lag fil: `calculator.py`
+## 2. Lag virtual environment (VENV)
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## 3. Installer pytest
+
+```bash
+pip install pytest
+```
+
+---
+
+## 4. Lag fil: `calculator.py`
 
 ```python
 def add(a, b):
@@ -51,7 +67,7 @@ def add(a, b):
 
 ---
 
-## 3. Lag testfil: `test_calculator.py`
+## 5. Lag testfil: `test_calculator.py`
 
 ```python
 from calculator import add
@@ -62,18 +78,10 @@ def test_add():
 
 ---
 
-## 4. Installer pytest
+## 6. Kjør tester
 
 ```bash
-python3 -m pip install pytest
-```
-
----
-
-## 5. Kjør tester
-
-```bash
-python3 -m pytest
+pytest
 ```
 
 ---
@@ -106,7 +114,42 @@ Kjør tester igjen → FAIL
 
 ---
 
-# DEL 2 – GitHub Actions
+## 💡 Hva skjer?
+
+- Vi bruker venv for å holde prosjektet isolert
+- pytest tester koden automatisk
+
+---
+
+# Viktig: .gitignore
+
+Lag fil:
+
+```bash
+.gitignore
+```
+
+Innhold:
+
+```text
+venv/
+__pycache__/
+.pytest_cache/
+```
+
+---
+
+## requirements.txt
+
+Lag fil:
+
+```text
+pytest
+```
+
+---
+
+# DEL 2 – Med GitHub Actions
 
 ## 1. Lag repository på GitHub
 
@@ -115,7 +158,7 @@ https://github.com → New repository
 
 ---
 
-## 2. Last opp filer
+## 2. Last opp prosjektet
 
 Du kan:
 - Dra filene inn på GitHub  
@@ -126,7 +169,7 @@ ELLER
 
 ## 3. Lag workflow-fil
 
-Lag fil:
+Lag mappe og fil:
 
 ```bash
 .github/workflows/python-tests.yml
@@ -153,47 +196,48 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: pip install pytest
+      - run: pip install -r requirements.txt
 
       - run: pytest
 ```
 
 ---
 
-## 5. Push / last opp
+## 5. Last opp / push kode
 
-Nå trenger du ikke å skrive "pytest" i terminalen.
-Push kode til Github med "git push" -
-Gå til repository/actions, der ser du testen
+Hver gang du pusher kode til git med "git push",
+så kjører github testene automatisk.
+Du kan se testen inne på repository/Actions
 
-GitHub kjører testene automatisk
+
 
 ---
 
 # Hva skjer?
 
-GitHub:
-1. Starter en server
-2. Installerer Python
-3. Installerer pytest
-4. Kjører testene
+Når du pusher:
+
+1. GitHub starter en server  
+2. Installerer Python  
+3. Installerer pytest  
+4. Kjører testene  
 
 ---
 
 # Resultat
 
-- 🟢 Grønn = alt fungerer
-- 🔴 Rød = feil i koden
+- 🟢 Grønn = alt fungerer  
+- 🔴 Rød = feil i koden  
 
 ---
 
-# Demo
+# Test testene
 
-1. Gjør en feil i koden
-2. Last opp / push
-3. Gå til "Actions"
-4. Se testen feile
-5. Fiks → last opp → grønn
+1. Gjør en feil i koden  
+2. Last opp / push  
+3. Gå til "Actions"  
+4. Se testen feile  
+5. Fiks → last opp → grønn  
 
 ---
 
