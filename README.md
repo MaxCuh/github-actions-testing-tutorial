@@ -1,4 +1,4 @@
-# 🧪Automatisert testing med Python og GitHub Actions (tutorial)
+# Automatisert testing med Python og GitHub Actions (tutorial)
 
 Denne guiden viser:
 - Hvordan teste kode lokalt med pytest
