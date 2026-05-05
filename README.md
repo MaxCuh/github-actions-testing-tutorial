@@ -162,7 +162,9 @@ jobs:
 
 ## 5. Push / last opp
 
-Når du laster opp kode:
+Nå trenger du ikke å skrive "pytest" i terminalen.
+Push kode til Github med "git push" -
+Gå til repository/actions, der ser du testen
 
 GitHub kjører testene automatisk
 
